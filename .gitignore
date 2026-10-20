@@ -1,0 +1,27 @@
+# Data (not redistributed)
+train/
+test/
+public_test.zip
+hf_data/
+ecc_decode_reproduce.zip
+*.part
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+.env
+.env.*
+
+# Generated submissions and logs
+submission*.csv
+!results/*.csv.gz
+*.log
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

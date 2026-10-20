@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Compile
+        run: |
+          python -m compileall -q baseline.py bit_map_decoder_fast.py \
+            scale_mixture_submit.py scale_mixture_submit_o45.py \
+            validate_submission.py scripts tests
+
+      - name: Test
+        run: python -m unittest discover -s tests -v
