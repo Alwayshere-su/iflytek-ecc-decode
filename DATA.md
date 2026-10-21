@@ -57,16 +57,37 @@ train/
 test/
 public_test.zip
 hf_data/
+baseline.py
+baseline.zip
+channel_calibration.npz
 *.part
 ```
 
 训练数据约 338 MB（shard 000/001），公开测试 CSV 约 119 MB；两者都超过或接近
 GitHub 单文件 100 MB 的限制，因此只保留下载脚本和目录说明。
 
-## 4. 数据来源与授权
+## 4. 官方 baseline 资源（不随仓库分发）
+
+官方发布的 baseline 包没有附带开源许可证，因此本仓库不包含、也不在 Git 历史中
+保留以下文件：
+
+- `baseline.py`：官方 OSD-2 baseline 参考实现；
+- `baseline.zip`：官方 `POLAR_N64_K32` 校验矩阵；
+- `channel_calibration.npz`：由 baseline 在训练数据上生成的校准缓存。
+
+从赛事官方渠道取得 `baseline.py` 与 `baseline.zip` 后放在仓库根目录。首次运行
+`python baseline.py --max-rows 100 --output submission_debug.csv` 会生成
+`channel_calibration.npz`，之后可用 `--reuse-calibration` 复用。这些文件已加入
+`.gitignore`，不会被误提交。
+
+缺少 `baseline.zip` 时，`validate_submission.py` 会跳过校验矩阵检查并给出警告；
+`bit_map_decoder_fast.py` 和 `scale_mixture_submit*.py` 需要该文件才能运行。
+
+## 5. 数据来源与授权
 
 - 训练数据：`aprofeta/ecc-dataset`，版权与使用条款归数据集作者/发布方所有。
 - 公开测试集、官方 baseline、POLAR_N64_K32 校验矩阵：2026 讯飞纠错码解码挑战赛
   主办方提供，版权归主办方所有。
-- 本仓库只分发作者编写的代码、文档和压缩后的参考提交；不重新分发上述数据。
-  如官方发布正式许可证，以官方条款为准。详见 [ATTRIBUTION.md](ATTRIBUTION.md)。
+- 本仓库只分发作者编写的代码、文档和压缩后的参考提交；不重新分发上述数据与
+  官方 baseline 资源。如官方发布正式许可证，以官方条款为准。详见
+  [ATTRIBUTION.md](ATTRIBUTION.md)。

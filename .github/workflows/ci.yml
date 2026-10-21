@@ -22,7 +22,7 @@ jobs:
 
       - name: Compile
         run: |
-          python -m compileall -q baseline.py bit_map_decoder_fast.py \
+          python -m compileall -q bit_map_decoder_fast.py \
             scale_mixture_submit.py scale_mixture_submit_o45.py \
             validate_submission.py scripts tests
 

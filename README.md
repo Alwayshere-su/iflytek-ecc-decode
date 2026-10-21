@@ -128,13 +128,10 @@ x̂_i = 1  iff  P(bit_i=1|y) ≥ 0.5
 
 ```text
 .
-├── baseline.py                    # 官方 OSD-2 baseline（参考）
 ├── bit_map_decoder_fast.py        # 早期 bit-MAP 解码器
 ├── scale_mixture_submit.py        # order-3 + scale-mixture 生产脚本
 ├── scale_mixture_submit_o45.py    # order-4 + scale-mixture 主推脚本
 ├── validate_submission.py         # 提交格式 / 校验矩阵检查
-├── baseline.zip                   # 官方 POLAR_N64_K32 校验矩阵
-├── channel_calibration.npz        # baseline 信道校准缓存
 ├── requirements.txt
 ├── DATA.md                        # 数据来源与放置方式
 ├── ATTRIBUTION.md                 # 第三方素材与授权边界
@@ -147,6 +144,9 @@ x̂_i = 1  iff  P(bit_i=1|y) ≥ 0.5
 ├── LICENSE                        # Apache-2.0（作者代码）
 └── LICENSE-docs                   # CC BY 4.0（文档）
 ```
+
+> 官方 baseline 资源（`baseline.py`、`baseline.zip`、`channel_calibration.npz`）
+> 因官方未附开源许可证，不随仓库分发；获取与放置方式见 [DATA.md](DATA.md)。
 
 ## 🚀 快速开始
 
@@ -231,8 +231,10 @@ python -c "import gzip,shutil; shutil.copyfileobj(gzip.open('results/submission_
 - 训练数据和公开测试数据不随仓库分发；需要按 [DATA.md](DATA.md) 自行准备。
 - order-4 推理内存占用较高，默认 `--nproc 24`；内存不足时用 `--nproc 8` 或更低。
 - bit-MAP 输出不保证每行都是合法码字，这是 bit 级最优决策的正常结果。
-- `baseline.py`、`baseline.zip` 和公开测试集来自赛事官方/主办方；授权边界见
-  [ATTRIBUTION.md](ATTRIBUTION.md)。如果官方有正式许可证，以官方版本为准。
+- 官方 baseline 资源（`baseline.py`、`baseline.zip`、`channel_calibration.npz`）
+  与公开测试集来自赛事主办方。官方发布时未附开源许可证，因此本仓库不包含这些
+  文件；获取方式见 [DATA.md](DATA.md)，授权边界见 [ATTRIBUTION.md](ATTRIBUTION.md)。
+  如果官方有正式许可证，以官方版本为准。
 - 排行榜更高名次与本项目复现的合法单样本下限存在差距；具体原因无法从公开信息
   判断，本文档不做针对任何队伍的事实指控。
 
@@ -240,5 +242,5 @@ python -c "import gzip,shutil; shutil.copyfileobj(gzip.open('results/submission_
 
 - 作者编写的代码：Apache-2.0，见 [LICENSE](LICENSE)。
 - 文档：CC BY 4.0，见 [LICENSE-docs](LICENSE-docs)。
-- 官方 baseline、校验矩阵、数据集与测试集的版权归各自权利人所有；详见
-  [ATTRIBUTION.md](ATTRIBUTION.md)。
+- 官方 baseline、校验矩阵、数据集与测试集的版权归各自权利人所有，且均不随
+  本仓库分发；详见 [ATTRIBUTION.md](ATTRIBUTION.md)。

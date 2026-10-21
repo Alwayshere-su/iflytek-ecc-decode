@@ -24,7 +24,10 @@ BIT_COLUMNS = [f"bit_{i}" for i in range(64)]
 
 
 def load_parity():
-    with ZipFile(ROOT / "baseline.zip") as a:
+    archive = ROOT / "baseline.zip"
+    if not archive.exists():
+        return None
+    with ZipFile(archive) as a:
         raw = a.read("baseline/Codes_DB/POLAR_N64_K32.txt")
     return np.loadtxt(io.BytesIO(raw), dtype=np.uint8)
 
@@ -77,12 +80,20 @@ def main():
 
     # 4. parity check (bit-MAP output legitimately violates; only OSD must pass)
     n_viol = -1
+    parity_checked = False
     if not args.skip_parity:
         H = load_parity()
-        syn = (bits @ H.T) % 2
-        n_viol = int((syn.sum(axis=1) > 0).sum())
-        if n_viol:
-            problems.append(f"{n_viol} rows violate parity-check matrix")
+        if H is None:
+            print(
+                "WARNING: baseline.zip not found; parity check skipped. "
+                "Place the official baseline package at the repo root (see DATA.md)."
+            )
+        else:
+            parity_checked = True
+            syn = (bits @ H.T) % 2
+            n_viol = int((syn.sum(axis=1) > 0).sum())
+            if n_viol:
+                problems.append(f"{n_viol} rows violate parity-check matrix")
 
     # 5. row count
     if expect_rows is not None and len(df) != expect_rows:
@@ -93,6 +104,8 @@ def main():
     print(f"cols      : {len(cols)}")
     if args.skip_parity:
         print("parity    : skipped (bit-MAP mode)")
+    elif not parity_checked:
+        print("parity    : skipped (baseline.zip missing)")
     else:
         print(f"parity ok : {len(df) - n_viol}/{len(df)}")
     if problems:

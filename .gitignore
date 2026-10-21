@@ -1,9 +1,12 @@
-# Data (not redistributed)
+# Data and official assets (not redistributed)
 train/
 test/
 public_test.zip
 hf_data/
 ecc_decode_reproduce.zip
+baseline.py
+baseline.zip
+channel_calibration.npz
 *.part
 
 # Python
