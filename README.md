@@ -168,8 +168,10 @@ python scripts/download_data.py --shards 0-1
 python -c "import zipfile; zipfile.ZipFile('public_test.zip').extractall('test')"
 ```
 
-详细说明见 [DATA.md](DATA.md)。`train/`、`test/`、`public_test.zip` 都已在
-`.gitignore` 中，不会被提交。
+官方 baseline 资源 `baseline.py`、`baseline.zip`、`channel_calibration.npz` 因
+官方未附许可证，不随仓库分发；从官方渠道获取后放在仓库根目录（主推理脚本需要
+`baseline.zip`）。详细说明见 [DATA.md](DATA.md)。`train/`、`test/`、
+`public_test.zip` 与上述三个官方文件都已在 `.gitignore` 中，不会被提交。
 
 > 两个生产脚本的输入路径不同：order-3 脚本直接读根目录的 `public_test.zip`；
 > order-4 脚本读解压后的 `test/competition_data/test_noisy_y_public.csv`。
